@@ -29,6 +29,7 @@ gulp.task('js', function() {
 // watch
 gulp.task('watch', function(){
   gulp.watch('./src/jsx/*.jsx', ['js']);
+  gulp.watch('./src/js/*.js', ['js']);
 });
 // webserver reload
 gulp.task('webserver', function () {
