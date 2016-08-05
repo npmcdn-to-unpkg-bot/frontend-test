@@ -1,20 +1,28 @@
 var gulp        = require('gulp');
 var pkg         = require('./package.json');
 
-var react       = require('gulp-react');
 var plumber     = require('gulp-plumber');
+var browserify  = require('browserify');
+var babelify    = require('babelify');
+var source      = require('vinyl-source-stream');
 var webserver   = require('gulp-webserver');
 
 // Javascript
-gulp.task('js', function () {
-  gulp.src('./src/vendor/*.js')
-    .pipe(gulp.dest('./public/assets/js/'));
+gulp.task('js', function() {
+  // redux（ES2015で書かれているのでtransformする）
+  browserify('./src/jsx/app.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('bundle.js'))
+    .pipe(gulp.dest('./public/assets/js/'))
+
+  // Pure JS（将来的に削除）
   gulp.src('./src/js/*.js')
     .pipe(gulp.dest('./public/assets/js/'));
 
-  return gulp.src('./src/jsx/*.jsx')
-    .pipe(plumber())
-    .pipe(react())
+  // vendor（既製品）
+  return gulp.src('./src/vendor/*.js')
     .pipe(gulp.dest('./public/assets/js/'));
 });
 
