@@ -15,10 +15,14 @@ gulp.task('js', function() {
     .bundle()
     .on("error", function (err) { console.log("Error : " + err.message); })
     .pipe(source('bundle.js'))
-    .pipe(gulp.dest('./public/assets/js/'))
+    .pipe(gulp.dest('./public/assets/js/'));
 
-  // Pure JS（将来的に削除）
-  gulp.src('./src/js/*.js')
+  // jsx（将来的に削除）
+  browserify('./src/jsx/main.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('main.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
   // vendor（既製品）
@@ -26,11 +30,19 @@ gulp.task('js', function() {
     .pipe(gulp.dest('./public/assets/js/'));
 });
 
+// CSS
+gulp.task('css', function() {
+  // vendor（既製品）
+  return gulp.src('./src/vendor/*.css')
+    .pipe(gulp.dest('./public/assets/css/'));
+});
+
 // watch
 gulp.task('watch', function(){
   gulp.watch('./src/jsx/*.jsx', ['js']);
   gulp.watch('./src/js/*.js', ['js']);
 });
+
 // webserver reload
 gulp.task('webserver', function () {
     gulp.src('./public')
@@ -41,4 +53,4 @@ gulp.task('webserver', function () {
         }));
 });
 
-gulp.task('default', ['js', 'watch', 'webserver']);
+gulp.task('default', ['js', 'css', 'watch', 'webserver']);

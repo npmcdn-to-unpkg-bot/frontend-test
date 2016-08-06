@@ -121,7 +121,7 @@ var CommentForm = React.createClass({
 ReactDOM.render(
   <CommentBox
     url="https://react-redux-sokushu-api.herokuapp.com/issues?status=open"
-    pollInterval={240000}
+    pollInterval={2000}
   />,
   $('#content')[0]
 );
