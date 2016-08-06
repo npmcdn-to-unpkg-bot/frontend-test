@@ -14,15 +14,21 @@ gulp.task('js', function() {
     .transform(babelify)
     .bundle()
     .on("error", function (err) { console.log("Error : " + err.message); })
-    .pipe(source('bundle.js'))
+    .pipe(source('app.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
-  // jsx（将来的に削除）
-  browserify('./src/jsx/main.jsx', { debug: true })
+  browserify('./src/comments/index.jsx', { debug: true })
     .transform(babelify)
     .bundle()
     .on("error", function (err) { console.log("Error : " + err.message); })
-    .pipe(source('main.js'))
+    .pipe(source('comments.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
+  browserify('./src/counter/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('counter.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
   // vendor（既製品）
@@ -39,8 +45,7 @@ gulp.task('css', function() {
 
 // watch
 gulp.task('watch', function(){
-  gulp.watch('./src/jsx/*.jsx', ['js']);
-  gulp.watch('./src/js/*.js', ['js']);
+  gulp.watch('./src/jsx/**/*.js', ['js']);
 });
 
 // webserver reload
