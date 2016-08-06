@@ -10,6 +10,13 @@ var webserver   = require('gulp-webserver');
 // Javascript
 gulp.task('js', function() {
   // redux（ES2015で書かれているのでtransformする）
+  browserify('./src/route/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('route.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
   browserify('./src/jsx/app.jsx', { debug: true })
     .transform(babelify)
     .bundle()
@@ -52,7 +59,8 @@ gulp.task('css', function() {
 
 // watch
 gulp.task('watch', function(){
-  gulp.watch('./src/jsx/**/*.js', ['js']);
+  gulp.watch('./src/**/*.js', ['js']);
+  gulp.watch('./src/**/*.jsx', ['js']);
 });
 
 // webserver reload
