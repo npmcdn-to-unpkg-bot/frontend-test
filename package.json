@@ -14,10 +14,12 @@
     "gulp": "^3.9.1",
     "gulp-plumber": "^1.1.0",
     "gulp-react": "^3.1.0",
+    "gulp-uglify": "^2.0.0",
     "gulp-webserver": "^0.9.1",
     "react-router": "^2.6.1",
     "redux-devtools": "^3.3.1",
     "serve": "^1.4.0",
+    "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
