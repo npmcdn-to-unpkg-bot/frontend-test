@@ -80,6 +80,7 @@ gulp.task('css', function() {
 // watch
 gulp.task('watch', function(){
   gulp.watch('./src/**/*.jsx', ['js']);
+  gulp.watch('./src/**/*.js', ['js']);
 });
 
 // webserver reload
