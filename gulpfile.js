@@ -58,6 +58,13 @@ gulp.task('js', function() {
     .pipe(source('counter.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
+  browserify('./src/action/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('action.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
   browserify('./src/todo/index.jsx', { debug: true })
     .transform(babelify)
     .bundle()
