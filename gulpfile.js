@@ -72,6 +72,13 @@ gulp.task('js', function() {
     .pipe(source('todo.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
+  browserify('./src/todo2/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('todo2.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
   // vendor（既製品）
   return gulp.src('./src/vendor/*.js')
     .pipe(gulp.dest('./public/assets/js/'));
