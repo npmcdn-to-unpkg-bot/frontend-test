@@ -10,7 +10,7 @@ var source      = require('vinyl-source-stream');
 var buffer      = require("vinyl-buffer");
 var webserver   = require('gulp-webserver');
 
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 
 // Javascript
 gulp.task('js', function() {
@@ -26,8 +26,8 @@ gulp.task('js', function() {
       this.emit("end");
     })
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(uglify())
+    // .pipe(buffer())
+    // .pipe(uglify())
     .pipe(gulp.dest('./public/assets/js/'));
 
   browserify('./src/route/index.jsx', { debug: true })
