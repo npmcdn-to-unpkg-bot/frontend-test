@@ -10,7 +10,7 @@ var source      = require('vinyl-source-stream');
 var buffer      = require("vinyl-buffer");
 var webserver   = require('gulp-webserver');
 
-process.env.NODE_ENV = 'production';
+//process.env.NODE_ENV = 'production';
 
 // Javascript
 gulp.task('js', function() {
@@ -26,8 +26,8 @@ gulp.task('js', function() {
       this.emit("end");
     })
     .pipe(source('bundle.js'))
-    .pipe(buffer())
-    .pipe(uglify())
+    // .pipe(buffer())
+    // .pipe(uglify())
     .pipe(gulp.dest('./public/assets/js/'));
 
   browserify('./src/route/index.jsx', { debug: true })
@@ -58,11 +58,25 @@ gulp.task('js', function() {
     .pipe(source('counter.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
+  browserify('./src/action/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('action.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
   browserify('./src/todo/index.jsx', { debug: true })
     .transform(babelify)
     .bundle()
     .on("error", function (err) { console.log("Error : " + err.message); })
     .pipe(source('todo.js'))
+    .pipe(gulp.dest('./public/assets/js/'));
+
+  browserify('./src/todo2/index.jsx', { debug: true })
+    .transform(babelify)
+    .bundle()
+    .on("error", function (err) { console.log("Error : " + err.message); })
+    .pipe(source('todo2.js'))
     .pipe(gulp.dest('./public/assets/js/'));
 
   // vendor（既製品）
@@ -80,6 +94,7 @@ gulp.task('css', function() {
 // watch
 gulp.task('watch', function(){
   gulp.watch('./src/**/*.jsx', ['js']);
+  gulp.watch('./src/**/*.js', ['js']);
 });
 
 // webserver reload
